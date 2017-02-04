@@ -24,6 +24,7 @@ killasgroup=true
 
 
 [root@autoyunwei api_monitor]# cat /etc/supervisord/api.conf 
+```
 [program:api]
 command=nohup python  /root/script/api.py &
 stdout_logfile=/var/log/api_stdout.log
@@ -33,4 +34,4 @@ startsecs=5
 priority=1
 stopasgroup=true
 killasgroup=true
-
+```
