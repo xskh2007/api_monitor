@@ -11,6 +11,7 @@
 
 ##supervisord配置文件  
 [root@autoyunwei api_monitor]# cat /etc/supervisord/check_api2.conf 
+```
 [program:check_api2]
 command=nohup python  /root/script/check_api2.py &
 stdout_logfile=/var/log/check_api2_stdout.log
@@ -20,7 +21,7 @@ startsecs=5
 priority=1
 stopasgroup=true
 killasgroup=true
-
+```
 
 
 [root@autoyunwei api_monitor]# cat /etc/supervisord/api.conf 
