@@ -1,5 +1,8 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
+# -*- coding:utf-8 -*- 
+#Author: qiantu
+#qq 261767353
+
 import urllib
 import os
 import time
