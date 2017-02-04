@@ -9,6 +9,7 @@
   2.3为避免短信浪费和邮件轰炸，加了锁功能调用告警接口前会判断下lock文件存不存在，存在就不再发送告警，如果所有url监控ok就删除lock文件。
   2.4用supervisord来守护上面2个进程
 
+##supervisord配置文件  
 [root@autoyunwei api_monitor]# cat /etc/supervisord/check_api2.conf 
 [program:check_api2]
 command=nohup python  /root/script/check_api2.py &
