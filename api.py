@@ -1,5 +1,8 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
+# -*- coding:utf-8 -*- 
+#Author: qiantu
+#qq 261767353
+
 from email import encoders
 from email.header import Header
 from email.mime.text import MIMEText
