@@ -21,7 +21,7 @@ urls = (
 )
 
 class mail:
-    def GET(self):
+    def POST(self):
         i=web.input()
 	toaddr=i.get('toaddr')
 	header=i.get('header')
@@ -36,7 +36,7 @@ class mail:
 			addr.encode('utf-8') if isinstance(addr, unicode) else addr))
 
 		from_addr = "wangqiantu@zuozh.com"
-		password = "******"
+		password = "Lht1111"
 		to_addr = toaddr.split(",")
 		print to_addr
 		smtp_server = "smtp.zuozh.com"
@@ -67,15 +67,15 @@ class sms:
         key_in=i.get('password')
         message=i.get('message')
 	url='http://wt.3tong.net/json/sms/Submit'
-	account="user"
-	password="password"
+	account="dh33781"
+	password="23eef4a25fe62ac5434a9e3f61107921"
         print phone
         mobile =phone
         text = message.encode('utf-8')
         print type(message)
         control=True
 	sign="【牛板金】"
-        key="*******"
+        key="zzjr123456"
         def send_sms(text, mobile):
     		"""
     		能用接口发短信
@@ -96,6 +96,42 @@ class sms:
         return u'sms send Successful'.encode('GBK')
 
 
+#class sms:
+#    def POST(self):
+#        i=web.input()
+#        phone=i.get('phone')
+#        key_in=i.get('password')
+#        message=i.get('message')
+#        host = "222.73.117.158"
+#        port = 80
+#        sms_send_uri = "/msg/HttpBatchSendSM"
+#        account  = "Zzjr666"
+#        password = "Zzjr666666"
+#        print phone
+#        mobile =phone
+#        text = message.encode('utf-8')
+#        print type(message)
+#        control=True
+#        key="zzjr123456"
+#        def send_sms(text, mobile):
+#    		"""
+#    		能用接口发短信
+#    		"""
+#    		params = urllib.urlencode({'account': account, 'pswd' : password, 'msg': text, 'mobile':mobile, 'needstatus' : 'false', 'product' : '', 'extno' : '' })
+#    		headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+#    		conn = httplib.HTTPConnection(host, port=port, timeout=30)
+#    		conn.request("POST", sms_send_uri, params, headers)
+#    		response = conn.getresponse()
+#    		response_str = response.read()
+#    		conn.close()
+#        if key_in !=key:
+#        	return  u'sms send fail,'.encode('GBK')+' password error'
+#        elif control==False:
+#                return  u'sms send fail,'.encode('GBK')+' control is off'
+#        else:
+#                send_sms(text, mobile)
+#                print "sms send Successful"
+#        return u'sms send Successful'.encode('GBK')
 
 if __name__ == "__main__":
     app = web.application(urls, globals())

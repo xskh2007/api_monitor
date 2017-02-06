@@ -22,15 +22,21 @@ while 1:
 	num=0
 	ISOTIMEFORMAT='%Y-%m-%d %X'
 	date_now=time.strftime( ISOTIMEFORMAT, time.localtime() )
-	for line in open("/root/script/post.url"):
+	for line in open("post.url"):
 		error_num=0
 		for x in range(0,3):
-			status=urllib.urlopen(line).code
-			surl="code:"+str(status)+"____"+"api:"+line.strip('\n')+"<br>"
-			if status !=200:
-				#errurl=errurl+surl
-				error_num=error_num+1
-				print '第'+str(x)+'次',surl
+			try:
+				status=urllib.urlopen(line).code
+				surl="code:"+str(status)+"____"+"api:"+line.strip('\n')+"<br>"
+				if status !=200:
+					#errurl=errurl+surl
+					error_num=error_num+1
+					print '第'+str(x)+'次',surl
+			except:
+				print 'time out',error_num
+				error_num = error_num + 1
+				surl="code:"+"time out"+"____"+"api:"+line.strip('\n')+"<br>"
+
 		if error_num==3:
 			num=num+1
 			errurl=errurl+surl
@@ -39,9 +45,11 @@ while 1:
 		print date_now+"|"+line.strip('\n')+"|"+'错误次数:'+str(error_num)
 	content=html+errurl+htmlend
 	if num!=0 and not os.path.exists("/tmp/check_api.lock"):
-	    cmd_mail="curl \"" + "http://192.168.2.168:11111/mail?toaddr="+mails+"&content="+ content +"&header=接口报警\""
+	    #cmd_mail="curl \"" + "http://192.168.2.168:11111/mail?toaddr="+mails+"&content="+ content +"&header=接口报警\""
+	    cmd_mail="curl -d \"toaddr="+mails+"&content="+content+"&header=接口报警" +"\" http://192.168.2.168:11111/mail"
 	    cmd_sms1="curl -d \"phone="+phone1+"&password=zzjr123456&message="+errurl_sms+"\" 192.168.2.168:11111/sms"
 	    #邮箱接口调用
+	    print content
 	    os.system(cmd_mail)
 	    #短信接口调用
 	    os.system(cmd_sms1)
@@ -52,7 +60,8 @@ while 1:
 	    #删除报警锁,有此文件不会报警
 	    os.system("rm -f /tmp/check_api.lock")
 	    #邮箱接口调用
-	    os.system("curl \"http://192.168.2.168:11111/mail?toaddr="+mails+"&content=所有接口正常"+"&header=接口报警\"")
+	    #os.system("curl \"http://192.168.2.168:11111/mail?toaddr="+mails+"&content=所有接口正常"+"&header=接口报警\"")
+	    os.system("curl -d \"toaddr="+mails+"&content=所有接口正常"+"&header=接口报警"+"\" http://192.168.2.168:11111/mail")
 	    #短信接口调用
 	    os.system("curl -d \"phone="+phone1+"&password=zzjr123456&message="+"所有接口正常"+date_now+"\" 192.168.2.168:11111/sms")
 	elif num==0 and not os.path.exists("/tmp/check_api.lock"):
