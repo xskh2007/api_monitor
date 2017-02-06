@@ -36,7 +36,7 @@ class mail:
 			addr.encode('utf-8') if isinstance(addr, unicode) else addr))
 
 		from_addr = "wangqiantu@zuozh.com"
-		password = "Lht1111"
+		password = "******"
 		to_addr = toaddr.split(",")
 		print to_addr
 		smtp_server = "smtp.zuozh.com"
@@ -67,8 +67,8 @@ class sms:
         key_in=i.get('password')
         message=i.get('message')
 	url='http://wt.3tong.net/json/sms/Submit'
-	account="dh33781"
-	password="23eef4a25fe62ac5434a9e3f61107921"
+	account="user"
+	password="password"
         print phone
         mobile =phone
         text = message.encode('utf-8')
@@ -105,8 +105,8 @@ class sms:
 #        host = "222.73.117.158"
 #        port = 80
 #        sms_send_uri = "/msg/HttpBatchSendSM"
-#        account  = "Zzjr666"
-#        password = "Zzjr666666"
+#        account  = ""
+#        password = ""
 #        print phone
 #        mobile =phone
 #        text = message.encode('utf-8')
