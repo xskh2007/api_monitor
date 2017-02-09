@@ -41,8 +41,7 @@ while 1:
 			errurl_sms=errurl.replace('http://','').replace('.','点')
 		print date_now+"|"+line.strip('\n')+"|"+'错误次数:'+str(error_num)
 	content=html+errurl+htmlend
-	if num >=0 and num<=3 and not os.path.exists("/tmp/check_api.lock"):
-	    #cmd_mail="curl \"" + "http://192.168.2.168:11111/mail?toaddr="+mails+"&content="+ content +"&header=接口报警\""
+	if num >0 and num<=3 and not os.path.exists("/tmp/check_api.lock"):
 	    cmd_mail="curl -d \"toaddr="+mails+"&content="+content+"&header=接口报警" +"\" http://192.168.2.168:11111/mail"
 	    cmd_sms1="curl -d \"phone="+phone1+"&password=zzjr123456&message="+errurl_sms+"\" 192.168.2.168:11111/sms"
 	    #邮箱接口调用
@@ -52,7 +51,6 @@ while 1:
 	    os.system(cmd_sms1)
 	    os.system("touch /tmp/check_api.lock")
 	if num >4 and not os.path.exists("/tmp/check_api.lock"):
-            #cmd_mail="curl \"" + "http://192.168.2.168:11111/mail?toaddr="+mails+"&content="+ content +"&header=接口报警\""
             cmd_mail="curl -d \"toaddr="+mails+"&content="+content+"&header=接口报警" +"\" http://192.168.2.168:11111/mail"
             cmd_sms1="curl -d \"phone="+phone1+"&password=zzjr123456&message="+"有大于3个接口告警,具体请查收邮件告警"+"\" 192.168.2.168:11111/sms"
             #邮箱接口调用
