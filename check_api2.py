@@ -1,8 +1,5 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*- 
-#Author: qiantu
-#qq 261767353
-
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import urllib
 import os
 import time
@@ -22,7 +19,7 @@ while 1:
 	num=0
 	ISOTIMEFORMAT='%Y-%m-%d %X'
 	date_now=time.strftime( ISOTIMEFORMAT, time.localtime() )
-	for line in open("post.url"):
+	for line in open("/root/script/post.url"):
 		error_num=0
 		for x in range(0,3):
 			try:
@@ -44,7 +41,7 @@ while 1:
 			errurl_sms=errurl.replace('http://','').replace('.','点')
 		print date_now+"|"+line.strip('\n')+"|"+'错误次数:'+str(error_num)
 	content=html+errurl+htmlend
-	if num!=0 and not os.path.exists("/tmp/check_api.lock"):
+	if num >=0 and num<=3 and not os.path.exists("/tmp/check_api.lock"):
 	    #cmd_mail="curl \"" + "http://192.168.2.168:11111/mail?toaddr="+mails+"&content="+ content +"&header=接口报警\""
 	    cmd_mail="curl -d \"toaddr="+mails+"&content="+content+"&header=接口报警" +"\" http://192.168.2.168:11111/mail"
 	    cmd_sms1="curl -d \"phone="+phone1+"&password=zzjr123456&message="+errurl_sms+"\" 192.168.2.168:11111/sms"
@@ -54,6 +51,16 @@ while 1:
 	    #短信接口调用
 	    os.system(cmd_sms1)
 	    os.system("touch /tmp/check_api.lock")
+	if num >4 and not os.path.exists("/tmp/check_api.lock"):
+            #cmd_mail="curl \"" + "http://192.168.2.168:11111/mail?toaddr="+mails+"&content="+ content +"&header=接口报警\""
+            cmd_mail="curl -d \"toaddr="+mails+"&content="+content+"&header=接口报警" +"\" http://192.168.2.168:11111/mail"
+            cmd_sms1="curl -d \"phone="+phone1+"&password=zzjr123456&message="+"有大于3个接口告警,具体请查收邮件告警"+"\" 192.168.2.168:11111/sms"
+            #邮箱接口调用
+            print content
+            os.system(cmd_mail)
+            #短信接口调用
+            os.system(cmd_sms1)
+            os.system("touch /tmp/check_api.lock")
 	elif num!=0 and os.path.exists("/tmp/check_api.lock"):
 	    print "有接口报警，但告警锁已打开，不在发送告警信息"
 	elif num==0 and os.path.exists("/tmp/check_api.lock"):
